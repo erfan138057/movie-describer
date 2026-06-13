@@ -1,6 +1,7 @@
 cat > process_movies.py << 'EOF'
 import ollama
 import time
+import re
 from tqdm import tqdm
 
 print("🚀 شروع پردازش فیلم‌ها با Phi-3 mini\n")
@@ -14,11 +15,19 @@ system_prompt = {
     "content": "تو یک دستیار مفید هستی. برای هر فیلم، داستان کامل و صحنه‌های مهم را در دقیقاً ۳ خط بنویس."
 }
 
-# خواندن لیست فیلم‌ها
+# خواندن و تمیز کردن لیست فیلم‌ها
 with open(input_file, 'r', encoding='utf-8') as f:
-    movies = [line.strip() for line in f.readlines() if line.strip()]
+    raw_movies = [line.strip() for line in f.readlines() if line.strip()]
 
-print(f"✅ {len(movies)} فیلم بارگذاری شد.\n")
+# حذف "watch uncut" و نگه داشتن اسم فیلم و سال
+movies = []
+for movie in raw_movies:
+    # حذف "watch uncut" از انتهای خط
+    clean_movie = re.sub(r'\s*watch uncut$', '', movie, flags=re.IGNORECASE)
+    movies.append(clean_movie)
+
+print(f"✅ {len(movies)} فیلم بارگذاری و تمیز شد.")
+print(f"مثال: {movies[0]}\n")
 
 with open(output_file, 'w', encoding='utf-8') as out:
     for i, movie in enumerate(tqdm(movies, desc="پردازش"), 1):
