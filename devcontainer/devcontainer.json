@@ -1,0 +1,14 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/prulloac/devcontainer-features/ollama:1": {}
+  },
+  "postCreateCommand": "ollama pull dolphin-llama3:8b",
+  "forwardPorts": ["11434"],
+  "portsAttributes": {
+    "11434": {
+      "label": "Ollama Server",
+      "onAutoForward": "notify"
+    }
+  }
+}
