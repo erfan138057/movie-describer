@@ -4,7 +4,7 @@ from tqdm import tqdm
 
 print("🦙 شروع پردازش فیلم‌ها با Dolphin...\n")
 
-model_name = "dolphin-llama3:8b"
+model_name = "phi3:mini"
 input_file = "movies.txt"
 output_file = "output_movies.txt"
 
